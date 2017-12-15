@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>What Makes the World Happpy?</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" /> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class = "jumbotron" style="background : #a442f4;">
+		<h1 align="center" style = "color: white;">What Makes the World Happy?</h1>
+        <h3 align="center">🌎😊</h3>
+		<div align="center">
+			<p class="subtitle" style="color: white;">The UN Sustainable Development Solutions Network (SDSN) carries out a yearly survey of the state of global happiness, ranking the world's countries by their happiness levels.</p>
+		</div>
+	</div>
+
+    <div class="jumbotron" align="center">
+        <p class="description">
+            There are different things in life that make people happy.
+        </p>
+    </div>
+
+    <!-- <div class = "jumbotron"> -->
+        <div align="center" id="bubble_chart">
+        <!-- style="border: 1px solid #888;" -->
+        <!-- viewBox="0 0 1000 600"  preserveAspectRatio="xMidYMid meet"-->
+            <svg width="1000" height="600"></svg>
+        </div>
+	<!-- </div> -->
+
+    <div align="center">
+        <label for="yearSlider" style="margin-right:6px;">2015</label>
+        <input id="yearSlider" type="text" data-slider-min="2015" data-slider-max="2017" data-slider-step="1" data-slider-value="2015" style="width: 500px;"/>
+        <label for="yearSlider"  style="margin-left:6px;">2017</label>
+    </div>
+
+    <br><br>
+
+    <div class = "jumbotron">
+		<h3 align="center">So, what makes YOU happy?</h3>
+		<div align="center">
+        <p>
+            Type your answer below and let me know!
+        </p>
+        <div class="row">
+                <div class="input-group">
+                    <input type="text" class="form-control"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Submit</button>
+                    </span>
+                </div><!-- /input-group -->
+        </div><!-- /.row -->
+	    </div>
+        <p>
+    </div>
+
+    <!--<div align="center" id="make_model">
+        <svg width="1000" height="800" ></svg>
+    </div>
+
+	<div class = "jumbotron">
+		<h3 align="center">Phase of the Flight</h3>
+        <div align="center">
+            <p id="flight_phase_p" align="center">
+                There are some phases of a flight where a passenger is less likely to get a serious or fatal injury in comparison to other phases. Go-Around is the most dangerous flight phase because pilot will abort landing and circle around if a landing is deemed unsafe.  The red squares represent the percentage of reported fatal injuries
+                at a specific flight phase out of all passengers on flight incidents, and the orange squares represent the percentage of reported serious injuries.
+				<br>
+				Hover over any of the squares to view the actual percentages.
+            </p>
+        </div>
+	</div> -->
+
+	<!-- <div id="flight_phase" align="center">
+        <svg width="1000" height="500" ></svg>
+    </div> -->
+
+	<!-- <div class = "jumbotron">
+		<h3 align="center">Where in the World?</h3>
+		<div align="center">
+			<p id="map_p">The good news is (if you fly mostly in the US) even though most accidents occur in the states, the majority are non-fatal. Accidents are color coded and sized by severity. The darker the color, the higher the severity. The larger the circle is, the higher the amount of reported injuries there were on that incident. The most deadly accident in the dataset was the Air France Flight 447 in 2009 which landed in the Atlantic Ocean.<br>Click on any of the points to view its details.</p>
+		</div>
+	</div> -->
+
+	<!-- <div id="main">
+        <div id="map" style="height: 500px; width: 100%;"></div>
+    </div> -->
+
+	<div align="center">
+			<!-- <br><br> -->
+		<p style="font-size:9pt">Created with ❤️ by Alejandrina Patrón</p>
+        <a href="mailto:apl7@gatech.edu" class="btn-social btn-outline"><i class="fa fa-lg fa-fw fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/alejandrinapatron" target="_blank" class="btn-social btn-outline"><i class="fa fa-lg fa-fw fa-linkedin"></i></a>
+        <a href="http://www.github.com/apatronl" target="_blank" class="btn-social btn-outline"><i class="fa fa-lg fa-fw fa-github"></i></a>
+        <br><br>
+    </div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://rawgit.com/Caged/d3-tip/master/index.js"></script>
+<script src="./js/main.js"></script>
+
+<!-- <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+<script src="./js/map.js"></script> -->
+</html>

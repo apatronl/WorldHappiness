@@ -1,0 +1,28 @@
+p {
+    /* max-width: 700px; */
+    width: 85%;
+}
+
+p.subtitle {
+    font-size: 18px;
+}
+
+p.description {
+    font-size: 16px;
+}
+
+.row {
+    width: 70%
+}
+
+.axis text {
+    fill: #888888;
+}
+
+.axis path, line {
+    stroke: #888888;
+}
+
+.slider-handle.round {
+    background-image: linear-gradient(to bottom,#979797 0,#707070 100%);
+}
