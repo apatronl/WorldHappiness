@@ -16,21 +16,67 @@ var svgWidth = +svg.attr('width');
 var svgHeight = +svg.attr('height');
 
 var padding = {t: 60, r: 40, b: 60, l: 50};
+var colors = {white: '#fff', lightGray: '#888'};
 
 var chartWidth = (svgWidth * 2/3) - padding.l - padding.r;
 var chartHeight = svgHeight - padding.t - padding.b;
 
 var bubbleChartG = svg.append('g')
-    // .attr('id', 'graph')
     .attr('transform', 'translate(' + [padding.l, padding.t] + ')');
 
-var countryG = svg.append('g')
+var detailsGroup = svg.append('g')
     .attr('transform', 'translate(' + [padding.l*2 + chartWidth, padding.t] + ')');
-countryG.append('rect')
-    .attr('fill', '#fff')
-    .attr('stroke', '#888')
+detailsGroup.append('rect')
+    .attr('fill', colors.white)
+    // .attr('stroke', colors.lightGray)
     .attr('height', chartHeight)
     .attr('width', (svgWidth * 1/3) - padding.l);
+
+var filtersGroup = detailsGroup.append('g');
+filtersGroup.append('text')
+    .text('Showing data for:');
+
+var familyFilter = filtersGroup.append('g')
+    .attr('class', 'filter selected')
+    .attr('value', 'family')
+    .on('click', function() {
+        // d3.select('.filter.selected').classed('selected', false);
+        // var clicked = d3.select(this);
+        // clicked.classed('selected', true);
+        // onMapCategoryChanged(d3.select(this).attr('value'));
+    });
+familyFilter.append('rect')
+    .attr('height', 20)
+    .attr('width', 60)
+    .attr('x', 3)
+    .attr('y', 4)
+    .attr('rx', 3)
+    .attr('ry', 3);
+familyFilter.append('text')
+    .attr('x', 7)
+    .attr('dy', '1.6em')
+    .text('Family');
+
+var gdpFilter = filtersGroup.append('g')
+    .attr('class', 'filter')
+    .attr('value', 'family')
+    .on('click', function() {
+        // d3.select('.filter.selected').classed('selected', false);
+        // var clicked = d3.select(this);
+        // clicked.classed('selected', true);
+        // onMapCategoryChanged(d3.select(this).attr('value'));
+    });
+gdpFilter.append('rect')
+    .attr('height', 20)
+    .attr('width', 90)
+    .attr('x', 72)
+    .attr('y', 4)
+    .attr('rx', 3)
+    .attr('ry', 3);
+gdpFilter.append('text')
+    .attr('x', 75)
+    .attr('dy', '1.6em')
+    .text('GDP per Capita');
 
 var years = [2015, 2016, 2017];
 
@@ -145,9 +191,9 @@ function updateChart(year) {
             if (regionColors[d.region]) {
                 return regionColors[d.region];
             }
-            return '#fff';
+            return colors.white;
         })
-        .style('stroke', '#888');
+        .style('stroke', colors.lightGray);
 
     // Append tooltip
     var tip = d3.tip()
