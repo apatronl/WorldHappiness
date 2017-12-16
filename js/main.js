@@ -355,7 +355,7 @@ function updateChart(year, indicator) {
             return xScale(d[indicator])
         })
         .attr('cy', function(d) {
-            return yScale(+d.score)
+            return yScale(d.score)
         });
 
     // Remove some countries for which data in a given year might not be present
@@ -381,11 +381,11 @@ function updateXAxis(indicator) {
 function showCountryDetails(countryData) {
     countryDetailsGroup.append('text')
         .attr('class', 'countryName')
-        .text(countryData.country)
+        .text('What makes ' + countryData.country + ' happy?')
         .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t/3] + ')');
 }
 
 function updateCountryDetails(countryData) {
     console.log(countryData.country);
-    countryDetailsGroup.select('.countryName').text(countryData.country);
+    countryDetailsGroup.select('.countryName').text('What makes ' + countryData.country + ' happy?');
 }
