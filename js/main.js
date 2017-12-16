@@ -1,6 +1,16 @@
 var selectedYear = 2015;
 var selectedIndicator = 'family';
 
+var indicatorToLabel = {
+    gdpPercap: 'GDP per Capita',
+    family: 'Family',
+    health: 'Health (Life Expectancy)',
+    freedom: 'Freedom',
+    generosity: 'Generosity',
+    trust: 'Trust',
+    dystResidual: 'Dystopia Residual'
+};
+
 // Creates a bootstrap-slider element
 $("#yearSlider").slider({
     tooltip: 'always',
@@ -28,15 +38,16 @@ var chartHeight = svgHeight - padding.t - padding.b;
 var bubbleChartG = svg.append('g')
     .attr('transform', 'translate(' + [padding.l, padding.t] + ')');
 
-// Filters for happiness indicators
 var detailsGroup = svg.append('g')
     .attr('transform', 'translate(' + [padding.l*2 + chartWidth, padding.t] + ')');
-detailsGroup.append('rect')
-    .attr('fill', colors.white)
-    // .attr('stroke', colors.lightGray)
-    .attr('height', chartHeight)
-    .attr('width', (svgWidth * 1/3) - padding.l);
 
+// detailsGroup.append('rect')
+//     .attr('fill', colors.white)
+//     .attr('stroke', colors.lightGray)
+//     .attr('height', chartHeight)
+//     .attr('width', (svgWidth * 1/3) - padding.l);
+
+// Filters for happiness indicators
 var filtersGroup = detailsGroup.append('g');
 filtersGroup.append('text')
     .text('Showing data for:');
@@ -139,7 +150,7 @@ var trustFilter = filtersGroup.append('g')
     });
 trustFilter.append('rect')
     .attr('height', 20)
-    .attr('width', 65)
+    .attr('width', 45)
     .attr('x', 138)
     .attr('y', 30)
     .attr('rx', 3)
@@ -148,6 +159,42 @@ trustFilter.append('text')
     .attr('x', 142)
     .attr('dy', '4em')
     .text('Trust');
+
+var dystopiaFilter = filtersGroup.append('g')
+    .attr('class', 'filter')
+    .attr('value', 'dystResidual')
+    .on('click', function() {
+        onFilterChanged(d3.select(this));
+    });
+dystopiaFilter.append('rect')
+    .attr('height', 20)
+    .attr('width', 102)
+    .attr('x', 186)
+    .attr('y', 30)
+    .attr('rx', 3)
+    .attr('ry', 3);
+dystopiaFilter.append('text')
+    .attr('x', 190)
+    .attr('dy', '4em')
+    .text('Dystopia Residual');
+
+// Country details on bubble chart hover
+var countryDetailsWidth = (svgWidth * 1/3) - padding.l;
+var countryDetailsHeight = chartHeight * 4/5;
+var countryDetailsX = (((svgWidth * 1/3) - padding.l) / 2) - (countryDetailsWidth/2);
+var countryDetailsY = chartHeight - (chartHeight * 3/4) - padding.b;
+
+detailsGroup.append('rect')
+    .attr('fill', colors.white)
+    // .attr('stroke', colors.lightGray)
+    .attr('x', countryDetailsX)
+    .attr('y', countryDetailsY)
+    .attr('height', countryDetailsHeight)
+    .attr('width', countryDetailsWidth)
+
+var countryDetailsGroup = detailsGroup.append('g')
+    .attr('class', 'countryDetails')
+    .attr('transform', 'translate(' + [countryDetailsX, countryDetailsY] + ')');
 
 var years = [2015, 2016, 2017];
 
@@ -199,12 +246,12 @@ d3.csv('./data/yearlyData.csv',
             })
             .entries(dataset);
 
-            dataByRegion = d3.nest()
-                .key(function(d) {
-                    return d.region;
-                })
-                .entries(dataset);
-                console.log(dataByRegion);
+        dataByRegion = d3.nest()
+            .key(function(d) {
+                return d.region;
+            })
+            .entries(dataset);
+            console.log(dataByRegion);
 
         allData = dataset;
 
@@ -231,13 +278,23 @@ d3.csv('./data/yearlyData.csv',
         var yAxisG = bubbleChartG.append('g')
             .attr('class', 'axis')
             .call(yAxis);
+
+        // axis labels
+        xAxisLabel = bubbleChartG.append('text')
+            .attr('class', 'axis-label')
+            .attr('transform', 'translate(' + [chartWidth/2, chartHeight + padding.t - padding.b/3] + ')')
+            .text('Family Contribution to Happiness Score');
+
         bubbleChartG.append('text')
             .attr('class', 'axis-label')
-            .attr('transform', 'translate(' + [-padding.l / 2, -padding.t / 2] + ')')
+            .attr('transform', 'translate(' + [padding.l/2, -padding.t / 4] + ')')
             .text('Happiness Score');
 
-        updateChart(2015, 'family')
+        updateChart(2015, 'family');
+        showCountryDetails(dataByCountry[0].values[0]);
     });
+
+/** Helper functions **/
 
 function updateChart(year, indicator) {
     // Remove previous tooltip
@@ -274,17 +331,20 @@ function updateChart(year, indicator) {
           return "<strong>" + d.country + "</strong>";
       });
 
-
     // Update circle and tooltip when data changes
     circles.merge(circleEnter).call(tip);
 
     circles.merge(circleEnter)
         .select('circle')
-        .on('mouseover', tip.show)
-        // .on('mouseover', function(d) {
-        //     console.log(d);
-        // })
-        .on('mouseout', tip.hide)
+        .on('mouseenter', tip.show)
+        .on('mouseleave', tip.hide)
+        .on('mouseover', function(d) {
+            // Show country details
+            updateCountryDetails(d);
+        })
+        .on('mouseout', function(d) {
+            console.log('out');
+        })
         .transition()
         .duration(750)
         .attr('opacity', 0.8)
@@ -311,9 +371,21 @@ function onFilterChanged(newFilter) {
 }
 
 function updateXAxis(indicator) {
+    xAxisLabel.text(indicatorToLabel[indicator] + ' Contribution to Happiness Score');
     xScale.domain(d3.extent(allData, function(d) {
         return d[indicator];
     }));
-    // svg.select('.x.axis')
     xAxisG.transition().duration(750).call(xAxis);
+}
+
+function showCountryDetails(countryData) {
+    countryDetailsGroup.append('text')
+        .attr('class', 'countryName')
+        .text(countryData.country)
+        .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t/3] + ')');
+}
+
+function updateCountryDetails(countryData) {
+    console.log(countryData.country);
+    countryDetailsGroup.select('.countryName').text(countryData.country);
 }

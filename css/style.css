@@ -19,6 +19,7 @@ p.description {
 
 .axis-label {
     fill: #888;
+    text-anchor: middle;
 }
 
 .axis text {
@@ -58,4 +59,10 @@ p.description {
 
 .filter.selected rect {
     fill: #a442f4;
+}
+
+/* Country Details */
+
+.countryDetails text {
+    text-anchor: middle;
 }
