@@ -1,3 +1,6 @@
+var selectedYear = 2015;
+var selectedIndicator = 'family';
+
 // Creates a bootstrap-slider element
 $("#yearSlider").slider({
     tooltip: 'always',
@@ -7,7 +10,8 @@ $("#yearSlider").slider({
 // Listens to the on "change" event for the slider
 $("#yearSlider").on('change', function(event){
     // Update the chart on the new value
-    updateChart(event.value.newValue);
+    selectedYear = event.value.newValue;
+    updateChart(selectedYear, selectedIndicator);
 });
 
 var svg = d3.select('#bubble_chart svg');
@@ -24,6 +28,7 @@ var chartHeight = svgHeight - padding.t - padding.b;
 var bubbleChartG = svg.append('g')
     .attr('transform', 'translate(' + [padding.l, padding.t] + ')');
 
+// Filters for happiness indicators
 var detailsGroup = svg.append('g')
     .attr('transform', 'translate(' + [padding.l*2 + chartWidth, padding.t] + ')');
 detailsGroup.append('rect')
@@ -40,43 +45,109 @@ var familyFilter = filtersGroup.append('g')
     .attr('class', 'filter selected')
     .attr('value', 'family')
     .on('click', function() {
-        // d3.select('.filter.selected').classed('selected', false);
-        // var clicked = d3.select(this);
-        // clicked.classed('selected', true);
-        // onMapCategoryChanged(d3.select(this).attr('value'));
+        onFilterChanged(d3.select(this));
     });
 familyFilter.append('rect')
     .attr('height', 20)
     .attr('width', 60)
     .attr('x', 3)
-    .attr('y', 4)
+    .attr('y', 5)
     .attr('rx', 3)
     .attr('ry', 3);
 familyFilter.append('text')
     .attr('x', 7)
-    .attr('dy', '1.6em')
+    .attr('dy', '1.7em')
     .text('Family');
 
 var gdpFilter = filtersGroup.append('g')
     .attr('class', 'filter')
-    .attr('value', 'family')
+    .attr('value', 'gdpPercap')
     .on('click', function() {
-        // d3.select('.filter.selected').classed('selected', false);
-        // var clicked = d3.select(this);
-        // clicked.classed('selected', true);
-        // onMapCategoryChanged(d3.select(this).attr('value'));
+        onFilterChanged(d3.select(this));
     });
 gdpFilter.append('rect')
     .attr('height', 20)
     .attr('width', 90)
-    .attr('x', 72)
-    .attr('y', 4)
+    .attr('x', 68)
+    .attr('y', 5)
     .attr('rx', 3)
     .attr('ry', 3);
 gdpFilter.append('text')
-    .attr('x', 75)
-    .attr('dy', '1.6em')
+    .attr('x', 72)
+    .attr('dy', '1.7em')
     .text('GDP per Capita');
+
+var healthFilter = filtersGroup.append('g')
+    .attr('class', 'filter')
+    .attr('value', 'health')
+    .on('click', function() {
+        onFilterChanged(d3.select(this));
+    });
+healthFilter.append('rect')
+    .attr('height', 20)
+    .attr('width', 60)
+    .attr('x', 163)
+    .attr('y', 5)
+    .attr('rx', 3)
+    .attr('ry', 3);
+healthFilter.append('text')
+    .attr('x', 167)
+    .attr('dy', '1.7em')
+    .text('Health');
+
+var freedomFilter = filtersGroup.append('g')
+    .attr('class', 'filter')
+    .attr('value', 'freedom')
+    .on('click', function() {
+        onFilterChanged(d3.select(this));
+    });
+freedomFilter.append('rect')
+    .attr('height', 20)
+    .attr('width', 60)
+    .attr('x', 3)
+    .attr('y', 30)
+    .attr('rx', 3)
+    .attr('ry', 3);
+freedomFilter.append('text')
+    .attr('x', 7)
+    .attr('dy', '4em')
+    .text('Freedom');
+
+var generosityFilter = filtersGroup.append('g')
+    .attr('class', 'filter')
+    .attr('value', 'generosity')
+    .on('click', function() {
+        onFilterChanged(d3.select(this));
+    });
+generosityFilter.append('rect')
+    .attr('height', 20)
+    .attr('width', 65)
+    .attr('x', 68)
+    .attr('y', 30)
+    .attr('rx', 3)
+    .attr('ry', 3);
+generosityFilter.append('text')
+    .attr('x', 72)
+    .attr('dy', '4em')
+    .text('Generosity');
+
+var trustFilter = filtersGroup.append('g')
+    .attr('class', 'filter')
+    .attr('value', 'trust')
+    .on('click', function() {
+        onFilterChanged(d3.select(this));
+    });
+trustFilter.append('rect')
+    .attr('height', 20)
+    .attr('width', 65)
+    .attr('x', 138)
+    .attr('y', 30)
+    .attr('rx', 3)
+    .attr('ry', 3);
+trustFilter.append('text')
+    .attr('x', 142)
+    .attr('dy', '4em')
+    .text('Trust');
 
 var years = [2015, 2016, 2017];
 
@@ -145,10 +216,10 @@ d3.csv('./data/yearlyData.csv',
                 return d.family;
             }))
             .range([0, chartWidth]);
-        var xAxis = d3.axisBottom(xScale);
-        var xAxisG = bubbleChartG.append('g')
+        xAxis = d3.axisBottom(xScale);
+        xAxisG = bubbleChartG.append('g')
             .attr('transform', 'translate(' + [0, chartHeight] + ')')
-            .attr('class', 'axis')
+            .attr('class', 'x axis')
             .call(xAxis);
 
         // y-axis
@@ -165,10 +236,10 @@ d3.csv('./data/yearlyData.csv',
             .attr('transform', 'translate(' + [-padding.l / 2, -padding.t / 2] + ')')
             .text('Happiness Score');
 
-        updateChart(2015)
+        updateChart(2015, 'family')
     });
 
-function updateChart(year) {
+function updateChart(year, indicator) {
     // Remove previous tooltip
     d3.selectAll('.d3-tip').remove();
 
@@ -210,6 +281,9 @@ function updateChart(year) {
     circles.merge(circleEnter)
         .select('circle')
         .on('mouseover', tip.show)
+        // .on('mouseover', function(d) {
+        //     console.log(d);
+        // })
         .on('mouseout', tip.hide)
         .transition()
         .duration(750)
@@ -218,7 +292,7 @@ function updateChart(year) {
             return radius;
         })
         .attr('cx', function(d) {
-            return xScale(+d.family)
+            return xScale(d[indicator])
         })
         .attr('cy', function(d) {
             return yScale(+d.score)
@@ -226,4 +300,20 @@ function updateChart(year) {
 
     // Remove some countries for which data in a given year might not be present
     circles.exit().remove();
+}
+
+function onFilterChanged(newFilter) {
+    d3.select('.filter.selected').classed('selected', false);
+    newFilter.classed('selected', true);
+    selectedIndicator = newFilter.attr('value');
+    updateXAxis(selectedIndicator);
+    updateChart(selectedYear, selectedIndicator);
+}
+
+function updateXAxis(indicator) {
+    xScale.domain(d3.extent(allData, function(d) {
+        return d[indicator];
+    }));
+    // svg.select('.x.axis')
+    xAxisG.transition().duration(750).call(xAxis);
 }
