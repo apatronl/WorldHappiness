@@ -11,6 +11,10 @@ var indicatorToLabel = {
     dystResidual: 'Dystopia Residual'
 };
 
+var highlighted = 1;
+var visible = 0.8;
+var invisible = 0.3;
+
 // Creates a bootstrap-slider element
 $("#yearSlider").slider({
     tooltip: 'always',
@@ -21,6 +25,7 @@ $("#yearSlider").slider({
 $("#yearSlider").on('change', function(event){
     // Update the chart on the new value
     selectedYear = event.value.newValue;
+    updateCountryDetailsOnYearChange();
     updateChart(selectedYear, selectedIndicator);
 });
 
@@ -169,12 +174,12 @@ var dystopiaFilter = filtersGroup.append('g')
 dystopiaFilter.append('rect')
     .attr('height', 20)
     .attr('width', 102)
-    .attr('x', 186)
+    .attr('x', 188)
     .attr('y', 30)
     .attr('rx', 3)
     .attr('ry', 3);
 dystopiaFilter.append('text')
-    .attr('x', 190)
+    .attr('x', 192)
     .attr('dy', '4em')
     .text('Dystopia Residual');
 
@@ -184,13 +189,13 @@ var countryDetailsHeight = chartHeight * 4/5;
 var countryDetailsX = (((svgWidth * 1/3) - padding.l) / 2) - (countryDetailsWidth/2);
 var countryDetailsY = chartHeight - (chartHeight * 3/4) - padding.b;
 
-detailsGroup.append('rect')
-    .attr('fill', colors.white)
-    // .attr('stroke', colors.lightGray)
-    .attr('x', countryDetailsX)
-    .attr('y', countryDetailsY)
-    .attr('height', countryDetailsHeight)
-    .attr('width', countryDetailsWidth)
+// detailsGroup.append('rect')
+//     .attr('fill', colors.white)
+//     .attr('stroke', colors.lightGray)
+//     .attr('x', countryDetailsX)
+//     .attr('y', countryDetailsY)
+//     .attr('height', countryDetailsHeight)
+//     .attr('width', countryDetailsWidth)
 
 var countryDetailsGroup = detailsGroup.append('g')
     .attr('class', 'countryDetails')
@@ -251,7 +256,6 @@ d3.csv('./data/yearlyData.csv',
                 return d.region;
             })
             .entries(dataset);
-            console.log(dataByRegion);
 
         allData = dataset;
 
@@ -341,8 +345,13 @@ function updateChart(year, indicator) {
         .on('mouseover', function(d) {
             // Show country details
             updateCountryDetails(d);
+            bubbleChartG.selectAll('circle')
+                .attr('opacity', function(e) {
+                    return d.country == e.country ? highlighted : invisible;
+                });
         })
         .on('mouseout', function(d) {
+            bubbleChartG.selectAll('circle').attr('opacity', visible);
             console.log('out');
         })
         .transition()
@@ -392,13 +401,29 @@ function showCountryDetails(countryData) {
         .attr('width', 130)
         .attr('x', countryDetailsWidth / 2 - 65)
         .attr('y', padding.t/2);
+
+    countryDetailsYear = countryDetailsGroup.append('text')
+        .attr('class', 'countryDetails')
+        .attr('id', 'year')
+        .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t*3] + ')')
+        .text('Year ' + selectedYear);
+
+    countryDetailsGroup.append('text')
+        .attr('class', 'countryDetails')
+        .attr('id', 'rank')
+        .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t*3.5] + ')')
+        .text('Rank: ' + countryData.rank);
 }
 
 function updateCountryDetails(countryData) {
-    console.log(countryData.country);
     countryDetailsGroup.select('.countryName').text('What makes ' + countryData.country + ' happy?');
     countryDetailsGroup.select('.countryFlag')
         .attr('xlink:href', function() {
             return 'img/' + countryData.country + '.png';
         });
+    countryDetailsGroup.select('#rank').text('Rank: ' + countryData.rank);
+}
+
+function updateCountryDetailsOnYearChange() {
+    countryDetailsGroup.select('#year').text('Year ' + selectedYear);
 }
