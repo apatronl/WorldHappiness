@@ -352,11 +352,10 @@ function updateChart(year, indicator) {
         })
         .on('mouseout', function(d) {
             bubbleChartG.selectAll('circle').attr('opacity', visible);
-            console.log('out');
         })
         .transition()
         .duration(750)
-        .attr('opacity', 0.8)
+        .attr('opacity', visible)
         .attr('r', function(d) {
             return radius;
         })
@@ -388,17 +387,13 @@ function updateXAxis(indicator) {
 }
 
 function showCountryDetails(countryData) {
-    countryDetailsGroup.append('text')
-        .attr('class', 'countryName')
-        .text('What makes ' + countryData.country + ' happy?')
-        .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t/3] + ')');
-
     countryDetailsGroup.append('image')
         .attr('class', 'countryFlag')
         .attr('xlink:href', function() {
-            return 'img/' + countryData.country + '.png';
+            return './img/' + countryData.country + '.png';
         })
         .attr('width', 130)
+        .attr('height', 130)
         .attr('x', countryDetailsWidth / 2 - 65)
         .attr('y', padding.t/2);
 
@@ -413,17 +408,23 @@ function showCountryDetails(countryData) {
         .attr('id', 'rank')
         .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t*3.5] + ')')
         .text('Rank: ' + countryData.rank);
+
+    countryDetailsGroup.append('text')
+        .attr('class', 'countryName')
+        .text('What makes ' + countryData.country + ' happy?')
+        .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t/2] + ')');
 }
 
 function updateCountryDetails(countryData) {
     countryDetailsGroup.select('.countryName').text('What makes ' + countryData.country + ' happy?');
     countryDetailsGroup.select('.countryFlag')
         .attr('xlink:href', function() {
-            return 'img/' + countryData.country + '.png';
+            return './img/' + countryData.country + '.png';
         });
     countryDetailsGroup.select('#rank').text('Rank: ' + countryData.rank);
 }
 
 function updateCountryDetailsOnYearChange() {
     countryDetailsGroup.select('#year').text('Year ' + selectedYear);
+    // TODO: update country rank and indicator distribution
 }
