@@ -391,7 +391,7 @@ function showCountryDetails(countryData) {
         })
         .attr('width', 130)
         .attr('x', countryDetailsWidth / 2 - 65)
-        .attr('y', padding.t/4);
+        .attr('y', padding.t/2);
 }
 
 function updateCountryDetails(countryData) {
