@@ -383,9 +383,22 @@ function showCountryDetails(countryData) {
         .attr('class', 'countryName')
         .text('What makes ' + countryData.country + ' happy?')
         .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t/3] + ')');
+
+    countryDetailsGroup.append('image')
+        .attr('class', 'countryFlag')
+        .attr('xlink:href', function() {
+            return 'img/' + countryData.country + '.png';
+        })
+        .attr('width', 130)
+        .attr('x', countryDetailsWidth / 2 - 65)
+        .attr('y', padding.t/4);
 }
 
 function updateCountryDetails(countryData) {
     console.log(countryData.country);
     countryDetailsGroup.select('.countryName').text('What makes ' + countryData.country + ' happy?');
+    countryDetailsGroup.select('.countryFlag')
+        .attr('xlink:href', function() {
+            return 'img/' + countryData.country + '.png';
+        });
 }
