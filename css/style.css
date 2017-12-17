@@ -10,9 +10,13 @@ p.description {
     font-size: 16px;
 }
 
-.row {
+.input-group {
     width: 60%
 }
+
+/* .row {
+    width: 60%
+} */
 
 /* Axes */
 

@@ -330,7 +330,6 @@ function updateChart(year, indicator) {
     // Append tooltip
     var tip = d3.tip()
       .attr('class', 'd3-tip')
-      .offset([-5, 0])
       .html(function(d) {
           return "<strong>" + d.country + "</strong>";
       });
@@ -354,7 +353,7 @@ function updateChart(year, indicator) {
             bubbleChartG.selectAll('circle').attr('opacity', visible);
         })
         .transition()
-        .duration(750)
+        .duration(650)
         .attr('opacity', visible)
         .attr('r', function(d) {
             return radius;
