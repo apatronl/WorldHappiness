@@ -28,7 +28,7 @@
 
     <div>
         <div class="container">
-            <h3>How are happiness scores calculated?</h3>
+            <h3>How Are Happiness Scores Calculated?</h3>
             <p class="description">
                 There are different things in life that make people happy.
             </p>
@@ -111,7 +111,26 @@
         <div align="center" id="bubble_chart">
         <!-- style="border: 1px solid #888;" -->
         <!-- viewBox="0 0 1000 600"  preserveAspectRatio="xMidYMid meet"-->
-            <svg width="1000" height="600"></svg>
+            <svg width="1000" height="600">
+                <g class='legend' transform="translate(230, 4)">
+                    <g>
+                        <circle r="8" cy="4" style="fill: #49f47f;"/>
+                        <text class="colorLegend" x="11" dy="0.7em">America</text>
+                    </g>
+                    <g transform="translate(75)">
+                        <circle r="8" cy="4" style="fill: #f44949;"/>
+                        <text class="colorLegend" x="11" dy="0.7em">Europe</text>
+                    </g>
+                    <g transform="translate(140)">
+                        <circle r="8" cy="4" style="fill: #49c9f4;"/>
+                        <text class="colorLegend" x="11" dy="0.7em">Africa</text>
+                    </g>
+                    <g transform="translate(200)">
+                        <circle r="8" cy="4" style="fill: #f4f149;"/>
+                        <text class="colorLegend" x="11" dy="0.7em">Asia/Oceania</text>
+                    </g>
+                </g>
+            </svg>
         </div>
 	<!-- </div> -->
 

@@ -201,23 +201,21 @@ var countryDetailsGroup = detailsGroup.append('g')
     .attr('class', 'countryDetails')
     .attr('transform', 'translate(' + [countryDetailsX, countryDetailsY] + ')');
 
+var countryDetailsBarChartG = countryDetailsGroup.append('g')
+    .attr('transform', 'translate(' + [countryDetailsX, 3.8*countryDetailsY] + ')');
+
+countryDetailsGroup.append('rect')
+    .attr('fill', colors.white)
+    .attr('stroke', colors.lightGray)
+    .attr('x', countryDetailsX)
+    .attr('y', 3.8*countryDetailsY)
+    .attr('height', countryDetailsHeight / 1.8)
+    .attr('width', countryDetailsWidth)
+
 var years = [2015, 2016, 2017];
 
-// Color mapping based on region
-// Western Europe
-// North America
-// Australia and New Zealand
-// Middle East and Northern Africa
-// Latin America and Caribbean
-// Southern Asia
-// Southeastern Asia
-// Central and Eastern Europe
-// Eastern Asia
-// Sub-Saharan Africa
-
-var regionColors = {'Western Europe': '#f44949', 'North America': '#49f47f',
-    'Australia and New Zealand': '#f4f149', 'Middle East and Northern Africa': '#49c9f4', 'Latin America and Caribbean': '#f449da',
-    'Southern Asia': '#49f4ce', 'Southeastern Asia': '#c6cad1', 'Central and Eastern Europe': '#f7b44a', 'Eastern Asia': '#775826', 'Sub-Saharan Africa': '#ad4ee5'};
+// Color mapping by region
+var regionColors = {'America': '#49f47f', 'Europe': '#f44949', 'Africa': '#49c9f4', 'Asia': '#f4f149'};
 
 var radius = 6;
 

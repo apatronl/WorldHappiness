@@ -33,6 +33,11 @@ p.description {
     stroke: #888888;
 }
 
+.colorLegend {
+    font-size: 12px;
+    fill: #888;
+}
+
 /* Slider */
 
 .slider-handle.round {
