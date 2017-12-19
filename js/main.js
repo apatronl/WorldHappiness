@@ -434,14 +434,20 @@ function showCountryDetails(countryData) {
         .attr('class', 'x axis')
         .call(xAxisDetails);
 
-    // y-axis
-    // yScaleDetails = d3.scaleBand()
-    //     .range([0, barChartHeight - 15]);
-    // yAxisDetails = d3.axisLeft(yScaleDetails).ticks(Object.keys(indicatorToLabel).length).tickSizeOuter(0);
-    // yAxisDetailsG = countryDetailsGroup.append('g')
-    //     .attr('transform', 'translate(' + [padding.l, countryDetailsHeight + 36 - barChartHeight + 15] + ')')
-    //     .attr('class', 'y axis')
-    //     .call(yAxisDetails);
+    bars = countryDetailsGroup.selectAll('bar')
+        .data(countryData.factors)
+        .enter()
+
+        .append('rect')
+        .style('fill', function(d) { return colors.lightGray; })
+        .attr('class', 'bar')
+        .attr('x', padding.l)
+        .attr('y', function(d, i) {
+            return 250 + 15 + (i*21);
+        })
+        .transition().duration(550)
+        .attr('width', function(d) { return xScaleDetails(d); })
+        .attr('height', 15);
 }
 
 function updateCountryDetails(countryData) {
@@ -454,6 +460,20 @@ function updateCountryDetails(countryData) {
 
     xScaleDetails.domain(d3.extent(countryData.factors));
     xAxisDetailsG.transition().duration(550).call(xAxisDetails);
+    countryDetailsGroup.selectAll('.bar').remove();
+    countryDetailsGroup.selectAll('.bar')
+        .data(countryData.factors)
+        .enter()
+        .append('rect')
+        .style('fill', function(d) { return colors.lightGray; })
+        .attr('class', 'bar')
+        .attr('x', padding.l)
+        .attr('y', function(d, i) {
+            return 250 + 15 + (i*21);
+        })
+        //.transition().duration(550)
+        .attr('width', function(d) { return xScaleDetails(d); })
+        .attr('height', 15);
 }
 
 function updateCountryDetailsOnYearChange() {
