@@ -427,10 +427,10 @@ function showCountryDetails(countryData) {
     // x-axis
     xScaleDetails = d3.scaleLinear()
         .domain(d3.extent(countryData.factors))
-        .range([0, barChartWidth - padding.l]);
+        .range([0, barChartWidth - padding.l*2]);
     xAxisDetails = d3.axisBottom(xScaleDetails).ticks(5);//.tickSizeOuter(0);
     xAxisDetailsG = countryDetailsGroup.append('g')
-        .attr('transform', 'translate(' + [padding.l, countryDetailsHeight + 36] + ')')
+        .attr('transform', 'translate(' + [padding.l*2, countryDetailsHeight + 36] + ')')
         .attr('class', 'x axis')
         .call(xAxisDetails);
 
@@ -442,7 +442,7 @@ function showCountryDetails(countryData) {
 
     bars.append('rect')
         .style('fill', function(d) { return '#a442f4'; })
-        .attr('x', padding.l)
+        .attr('x', padding.l*2)
         .attr('y', function(d, i) {
             return 250 + 15 + (i*21);
         })
@@ -456,7 +456,7 @@ function showCountryDetails(countryData) {
         })
         .attr('class', 'detailsBarLabel')
         .style('text-anchor', 'end')
-        .attr('x', padding.l/1.1)
+        .attr('x', padding.l*1.8)
         .attr('y', function(d, i) {
             return 250 + 26.5 + (i*21);
         });
@@ -479,7 +479,7 @@ function updateCountryDetails(countryData) {
         .append('rect')
         .style('fill', function(d) { return '#a442f4'; })
         // .attr('class', 'bar')
-        .attr('x', padding.l)
+        .attr('x', padding.l*2)
         .attr('y', function(d, i) {
             return 250 + 15 + (i*21);
         })
