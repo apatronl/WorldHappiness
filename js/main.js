@@ -46,12 +46,6 @@ var bubbleChartG = svg.append('g')
 var detailsGroup = svg.append('g')
     .attr('transform', 'translate(' + [padding.l*2 + chartWidth, padding.t] + ')');
 
-// detailsGroup.append('rect')
-//     .attr('fill', colors.white)
-//     .attr('stroke', colors.lightGray)
-//     .attr('height', chartHeight)
-//     .attr('width', (svgWidth * 1/3) - padding.l);
-
 // Filters for happiness indicators
 var filtersGroup = detailsGroup.append('g');
 filtersGroup.append('text')
@@ -189,14 +183,6 @@ var countryDetailsHeight = chartHeight * 4/5;
 var countryDetailsX = (((svgWidth * 1/3) - padding.l) / 2) - (countryDetailsWidth/2);
 var countryDetailsY = chartHeight - (chartHeight * 3/4) - padding.b;
 
-// detailsGroup.append('rect')
-//     .attr('fill', colors.white)
-//     .attr('stroke', colors.lightGray)
-//     .attr('x', countryDetailsX)
-//     .attr('y', countryDetailsY)
-//     .attr('height', countryDetailsHeight)
-//     .attr('width', countryDetailsWidth)
-
 var countryDetailsGroup = detailsGroup.append('g')
     .attr('class', 'countryDetails')
     .attr('transform', 'translate(' + [countryDetailsX, countryDetailsY] + ')');
@@ -206,14 +192,6 @@ var countryDetailsBarChartG = countryDetailsGroup.append('g')
 
 var barChartWidth = countryDetailsWidth;
 var barChartHeight = countryDetailsHeight / 1.8;
-
-// countryDetailsGroup.append('rect')
-//     .attr('fill', colors.white)
-//     .attr('stroke', colors.lightGray)
-//     .attr('x', countryDetailsX)
-//     .attr('y', 3.8*countryDetailsY)
-//     .attr('height', countryDetailsHeight / 1.8)
-//     .attr('width', countryDetailsWidth);
 
 var years = [2015, 2016, 2017];
 
@@ -307,6 +285,7 @@ d3.csv('./data/yearlyData.csv',
 
         updateChart(2015, 'family');
         showCountryDetails(dataByCountry[0].values[0]);
+        updateCountryDetails(dataByCountry[0].values[0]);
     });
 
 /** Helper functions **/
@@ -432,7 +411,8 @@ function showCountryDetails(countryData) {
 
     // x-axis
     xScaleDetails = d3.scaleLinear()
-        .domain(d3.extent(countryData.factors))
+        // .domain(d3.extent(countryData.factors))
+        .domain([0, 4])
         .range([0, barChartWidth - padding.l*2]);
     xAxisDetails = d3.axisBottom(xScaleDetails).ticks(5);//.tickSizeOuter(0);
     xAxisDetailsG = countryDetailsGroup.append('g')
@@ -440,32 +420,29 @@ function showCountryDetails(countryData) {
         .attr('class', 'x axis')
         .call(xAxisDetails);
 
-    bars = countryDetailsGroup.selectAll('bar')
+    countryDetailsGroup.append('text')
+        .attr('class', 'axis-label-small')
+        .attr('transform', 'translate(' + [countryDetailsWidth/1.45, countryDetailsHeight + 36*2] + ')')
+        .text('Factor Contribution to Happiness Score');
+
+
+    factorsLabels = countryDetailsGroup.selectAll('#indicatorLabel')
         .data(countryData.factors)
         .enter()
         .append('g')
-        .attr('class', 'bar');
+        .attr('id', 'indicatorLabel');
 
-    bars.append('rect')
-        .style('fill', function(d) { return '#a442f4'; })
-        .attr('x', padding.l*2)
-        .attr('y', function(d, i) {
-            return 250 + 15 + (i*21);
-        })
-        .transition().duration(550)
-        .attr('width', function(d) { return xScaleDetails(d); })
-        .attr('height', 15);
-
-    bars.append('text').text(function(d, i) {
+    factorsLabels.append('text').text(function(d, i) {
             key = Object.keys(indicatorToLabel)[i];
             return indicatorToLabel[key];
         })
         .attr('class', 'detailsBarLabel')
         .style('text-anchor', 'end')
-        .attr('x', padding.l*1.8)
+        .attr('x', padding.l * 1.9)
         .attr('y', function(d, i) {
             return 250 + 26.5 + (i*21);
         });
+
 }
 
 function updateCountryDetails(countryData) {
@@ -477,22 +454,44 @@ function updateCountryDetails(countryData) {
     countryDetailsGroup.select('#rank').text('Rank: ' + countryData.rank);
     countryDetailsGroup.select('#happinessScore').text('Happiness Score: ' + countryData.score);
 
-    xScaleDetails.domain(d3.extent(countryData.factors));
-    xAxisDetailsG.transition().duration(550).call(xAxisDetails);
-    bars.selectAll('rect').remove();
-    bars.selectAll('rect')
-        .data(countryData.factors)
-        .enter()
-        .append('rect')
-        .style('fill', function(d) { return '#a442f4'; })
-        // .attr('class', 'bar')
+    var bars = countryDetailsGroup.selectAll('.bar')
+        .data(countryData.factors, function(d, i) {
+            return countryData.country + i; // Object constancy by country
+        });
+
+    var barEnter = bars.enter()
+        .append('g')
+        .attr('class', 'bar');
+
+    barEnter.append('rect')
+        .style('fill', function() { return '#a442f4'; })
+        .attr('rx', 3);
+
+    barEnter.append('text');
+
+    bars.merge(barEnter)
+        .select('rect')
         .attr('x', padding.l*2)
         .attr('y', function(d, i) {
             return 250 + 15 + (i*21);
         })
-        //.transition().duration(550)
+        .transition().duration(450)
         .attr('width', function(d) { return xScaleDetails(d); })
         .attr('height', 15);
+
+    bars.merge(barEnter)
+        .select('text')
+        .text(function(d) {
+            return d.toFixed(2);
+        })
+        .attr('class', 'detailsBarLabel')
+        .attr('id', 'factorContribution')
+        .style('text-anchor', 'start')
+        .transition().duration(450)
+        .attr('x', function(d) { return padding.l * 2 + xScaleDetails(d) + 3; })
+        .attr('y', function(d, i) {
+            return 250 + 26.5 + (i*21);
+        });
 }
 
 function updateCountryDetailsOnYearChange() {

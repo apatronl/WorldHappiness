@@ -25,6 +25,12 @@ p.description {
     text-anchor: middle;
 }
 
+.axis-label-small {
+    fill: #888;
+    text-anchor: middle;
+    font-size: 11px;
+}
+
 .axis text {
     fill: #888;
 }
