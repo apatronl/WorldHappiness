@@ -1,5 +1,6 @@
 var selectedYear = 2015;
 var selectedIndicator = 'family';
+var selectedCountry = '';
 
 var indicatorToLabel = {
     gdpPercap: 'GDP per Capita',
@@ -253,10 +254,10 @@ d3.csv('./data/yearlyData.csv',
         // x-axis
         xScale = d3.scaleLinear()
             .domain(d3.extent(allData, function(d) {
-                return d.family;
+                return 100*d.family/d.score;
             }))
             .range([0, chartWidth]);
-        xAxis = d3.axisBottom(xScale);
+        xAxis = d3.axisBottom(xScale).tickFormat(function(d) { return d + '%'; });
         xAxisG = bubbleChartG.append('g')
             .attr('transform', 'translate(' + [0, chartHeight] + ')')
             .attr('class', 'x axis')
@@ -276,7 +277,7 @@ d3.csv('./data/yearlyData.csv',
         xAxisLabel = bubbleChartG.append('text')
             .attr('class', 'axis-label')
             .attr('transform', 'translate(' + [chartWidth/2, chartHeight + padding.t - padding.b/3] + ')')
-            .text('Family Contribution to Happiness Score');
+            .text('Family Percent Contribution to Happiness Score');
 
         bubbleChartG.append('text')
             .attr('class', 'axis-label')
@@ -286,12 +287,12 @@ d3.csv('./data/yearlyData.csv',
         updateChart(2015, 'family');
         showCountryDetails(dataByCountry[0].values[0]);
         updateCountryDetails(dataByCountry[0].values[0]);
+        selectedCountry = dataByCountry[0].values[0].country;
     });
 
 /** Helper functions **/
 
 function updateChart(year, indicator) {
-    // Remove previous tooltip
     d3.selectAll('.d3-tip').remove();
 
     var yearData = allData.filter(function(d) {
@@ -303,7 +304,6 @@ function updateChart(year, indicator) {
             return d.country; // Object constancy by country
         });
 
-    // Append circle
     var circleEnter = circles.enter()
         .append('g')
         .attr('class', 'country');
@@ -317,14 +317,12 @@ function updateChart(year, indicator) {
         })
         .style('stroke', colors.lightGray);
 
-    // Append tooltip
     var tip = d3.tip()
       .attr('class', 'd3-tip')
       .html(function(d) {
           return "<strong>" + d.country + "</strong>";
       });
 
-    // Update circle and tooltip when data changes
     circles.merge(circleEnter).call(tip);
 
     circles.merge(circleEnter)
@@ -332,7 +330,8 @@ function updateChart(year, indicator) {
         .on('mouseenter', tip.show)
         .on('mouseleave', tip.hide)
         .on('mouseover', function(d) {
-            // Show country details
+            selectedCountry = d.country;
+            console.log(selectedCountry);
             updateCountryDetails(d);
             bubbleChartG.selectAll('circle')
                 .attr('opacity', function(e) {
@@ -349,7 +348,7 @@ function updateChart(year, indicator) {
             return radius;
         })
         .attr('cx', function(d) {
-            return xScale(d[indicator])
+            return xScale(100*d[indicator]/d.score)
         })
         .attr('cy', function(d) {
             return yScale(d.score)
@@ -368,9 +367,9 @@ function onFilterChanged(newFilter) {
 }
 
 function updateXAxis(indicator) {
-    xAxisLabel.text(indicatorToLabel[indicator] + ' Contribution to Happiness Score');
+    xAxisLabel.text(indicatorToLabel[indicator] + ' Percent Contribution to Happiness Score');
     xScale.domain(d3.extent(allData, function(d) {
-        return d[indicator];
+        return 100*d[indicator]/d.score;
     }));
     xAxisG.transition().duration(750).call(xAxis);
 }
@@ -416,7 +415,7 @@ function showCountryDetails(countryData) {
         .range([0, barChartWidth - padding.l*2]);
     xAxisDetails = d3.axisBottom(xScaleDetails).ticks(5);//.tickSizeOuter(0);
     xAxisDetailsG = countryDetailsGroup.append('g')
-        .attr('transform', 'translate(' + [padding.l*2, countryDetailsHeight + 36] + ')')
+        .attr('transform', 'translate(' + [padding.l*2, countryDetailsHeight + 35] + ')')
         .attr('class', 'x axis')
         .call(xAxisDetails);
 
@@ -424,6 +423,11 @@ function showCountryDetails(countryData) {
         .attr('class', 'axis-label-small')
         .attr('transform', 'translate(' + [countryDetailsWidth/1.45, countryDetailsHeight + 36*2] + ')')
         .text('Factor Contribution to Happiness Score');
+
+    countryDetailsGroup.append('text')
+        .attr('class', 'axis-label-small')
+        .attr('transform', 'translate(' + [countryDetailsWidth/1.45, countryDetailsHeight + 36*2.4] + ')')
+        .text('Points | Percent of Score');
 
 
     factorsLabels = countryDetailsGroup.selectAll('#indicatorLabel')
@@ -456,7 +460,7 @@ function updateCountryDetails(countryData) {
 
     var bars = countryDetailsGroup.selectAll('.bar')
         .data(countryData.factors, function(d, i) {
-            return countryData.country + i; // Object constancy by country
+            return countryData.country + i;
         });
 
     var barEnter = bars.enter()
@@ -471,6 +475,10 @@ function updateCountryDetails(countryData) {
 
     bars.merge(barEnter)
         .select('rect')
+        .on('mouseover', function(d) {
+            percent = (100 * d/countryData.score).toFixed(1);
+            console.log(percent);
+        })
         .attr('x', padding.l*2)
         .attr('y', function(d, i) {
             return 250 + 15 + (i*21);
@@ -482,7 +490,7 @@ function updateCountryDetails(countryData) {
     bars.merge(barEnter)
         .select('text')
         .text(function(d) {
-            return d.toFixed(2);
+            return d.toFixed(2) + ' | ' + (100*d/countryData.score).toFixed(0) + '%';
         })
         .attr('class', 'detailsBarLabel')
         .attr('id', 'factorContribution')
@@ -497,4 +505,6 @@ function updateCountryDetails(countryData) {
 function updateCountryDetailsOnYearChange() {
     countryDetailsGroup.select('#year').text('Year ' + selectedYear);
     // TODO: update country rank and indicator distribution
+    // console.log(dataByCountry);
+    //updateCountryDetails(data)
 }
