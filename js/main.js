@@ -204,13 +204,16 @@ var countryDetailsGroup = detailsGroup.append('g')
 var countryDetailsBarChartG = countryDetailsGroup.append('g')
     .attr('transform', 'translate(' + [countryDetailsX, 3.8*countryDetailsY] + ')');
 
-countryDetailsGroup.append('rect')
-    .attr('fill', colors.white)
-    .attr('stroke', colors.lightGray)
-    .attr('x', countryDetailsX)
-    .attr('y', 3.8*countryDetailsY)
-    .attr('height', countryDetailsHeight / 1.8)
-    .attr('width', countryDetailsWidth)
+var barChartWidth = countryDetailsWidth;
+var barChartHeight = countryDetailsHeight / 1.8;
+
+// countryDetailsGroup.append('rect')
+//     .attr('fill', colors.white)
+//     .attr('stroke', colors.lightGray)
+//     .attr('x', countryDetailsX)
+//     .attr('y', 3.8*countryDetailsY)
+//     .attr('height', countryDetailsHeight / 1.8)
+//     .attr('width', countryDetailsWidth);
 
 var years = [2015, 2016, 2017];
 
@@ -233,7 +236,17 @@ d3.csv('./data/yearlyData.csv',
             freedom: +d.Freedom,
             generosity: +d.Generosity,
             trust: +d['Trust (Government Corruption)'],
-            dystResidual: +d['Dystopia Residual']
+            dystResidual: +d['Dystopia Residual'],
+            factors: [
+                +d['Economy (GDP per Capita)'],
+                +d.Family,
+                +d['Health (Life Expectancy)'],
+                +d.Freedom,
+                +d.Generosity,
+                +d['Trust (Government Corruption)'],
+                +d['Dystopia Residual']
+            ]
+
         }
     },
     function(error, dataset) {
@@ -410,6 +423,25 @@ function showCountryDetails(countryData) {
         .attr('class', 'countryName')
         .text('What makes ' + countryData.country + ' happy?')
         .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t/2] + ')');
+
+    // x-axis
+    xScaleDetails = d3.scaleLinear()
+        .domain(d3.extent(countryData.factors))
+        .range([0, barChartWidth - padding.l]);
+    xAxisDetails = d3.axisBottom(xScaleDetails).ticks(5);//.tickSizeOuter(0);
+    xAxisDetailsG = countryDetailsGroup.append('g')
+        .attr('transform', 'translate(' + [padding.l, countryDetailsHeight + 36] + ')')
+        .attr('class', 'x axis')
+        .call(xAxisDetails);
+
+    // y-axis
+    // yScaleDetails = d3.scaleBand()
+    //     .range([0, barChartHeight - 15]);
+    // yAxisDetails = d3.axisLeft(yScaleDetails).ticks(Object.keys(indicatorToLabel).length).tickSizeOuter(0);
+    // yAxisDetailsG = countryDetailsGroup.append('g')
+    //     .attr('transform', 'translate(' + [padding.l, countryDetailsHeight + 36 - barChartHeight + 15] + ')')
+    //     .attr('class', 'y axis')
+    //     .call(yAxisDetails);
 }
 
 function updateCountryDetails(countryData) {
@@ -419,6 +451,9 @@ function updateCountryDetails(countryData) {
             return './img/' + countryData.country + '.png';
         });
     countryDetailsGroup.select('#rank').text('Rank: ' + countryData.rank);
+
+    xScaleDetails.domain(d3.extent(countryData.factors));
+    xAxisDetailsG.transition().duration(550).call(xAxisDetails);
 }
 
 function updateCountryDetailsOnYearChange() {
