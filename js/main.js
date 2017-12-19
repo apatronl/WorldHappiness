@@ -165,23 +165,23 @@ trustFilter.append('text')
     .attr('dy', '4em')
     .text('Trust');
 
-var dystopiaFilter = filtersGroup.append('g')
-    .attr('class', 'filter')
-    .attr('value', 'dystResidual')
-    .on('click', function() {
-        onFilterChanged(d3.select(this));
-    });
-dystopiaFilter.append('rect')
-    .attr('height', 20)
-    .attr('width', 102)
-    .attr('x', 188)
-    .attr('y', 30)
-    .attr('rx', 3)
-    .attr('ry', 3);
-dystopiaFilter.append('text')
-    .attr('x', 192)
-    .attr('dy', '4em')
-    .text('Dystopia Residual');
+// var dystopiaFilter = filtersGroup.append('g')
+//     .attr('class', 'filter')
+//     .attr('value', 'dystResidual')
+//     .on('click', function() {
+//         onFilterChanged(d3.select(this));
+//     });
+// dystopiaFilter.append('rect')
+//     .attr('height', 20)
+//     .attr('width', 102)
+//     .attr('x', 188)
+//     .attr('y', 30)
+//     .attr('rx', 3)
+//     .attr('ry', 3);
+// dystopiaFilter.append('text')
+//     .attr('x', 192)
+//     .attr('dy', '4em')
+//     .text('Dystopia Residual');
 
 // Country details on bubble chart hover
 var countryDetailsWidth = (svgWidth * 1/3) - padding.l;
@@ -229,7 +229,7 @@ d3.csv('./data/yearlyData.csv',
             year: +d.Year,
             region: d.Region,
             rank: +d['Happiness Rank'],
-            score: +d['Happiness Score'],
+            score: (+d['Happiness Score']).toFixed(3),
             gdpPercap: +d['Economy (GDP per Capita)'],
             family: +d.Family,
             health: +d['Health (Life Expectancy)'],
@@ -420,6 +420,12 @@ function showCountryDetails(countryData) {
         .text('Rank: ' + countryData.rank);
 
     countryDetailsGroup.append('text')
+        .attr('class', 'countryDetails')
+        .attr('id', 'happinessScore')
+        .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t*4] + ')')
+        .text('Happiness Score: ' + countryData.score);
+
+    countryDetailsGroup.append('text')
         .attr('class', 'countryName')
         .text('What makes ' + countryData.country + ' happy?')
         .attr('transform', 'translate(' + [countryDetailsWidth / 2, padding.t/2] + ')');
@@ -469,6 +475,7 @@ function updateCountryDetails(countryData) {
             return './img/' + countryData.country + '.png';
         });
     countryDetailsGroup.select('#rank').text('Rank: ' + countryData.rank);
+    countryDetailsGroup.select('#happinessScore').text('Happiness Score: ' + countryData.score);
 
     xScaleDetails.domain(d3.extent(countryData.factors));
     xAxisDetailsG.transition().duration(550).call(xAxisDetails);
