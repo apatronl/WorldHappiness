@@ -38,6 +38,11 @@ p.description {
     fill: #888;
 }
 
+.detailsBarLabel {
+    font-size: 11px;
+    fill: #888;
+}
+
 /* Slider */
 
 .slider-handle.round {

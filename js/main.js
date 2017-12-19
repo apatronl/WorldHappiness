@@ -437,10 +437,11 @@ function showCountryDetails(countryData) {
     bars = countryDetailsGroup.selectAll('bar')
         .data(countryData.factors)
         .enter()
+        .append('g')
+        .attr('class', 'bar');
 
-        .append('rect')
-        .style('fill', function(d) { return colors.lightGray; })
-        .attr('class', 'bar')
+    bars.append('rect')
+        .style('fill', function(d) { return '#a442f4'; })
         .attr('x', padding.l)
         .attr('y', function(d, i) {
             return 250 + 15 + (i*21);
@@ -448,6 +449,17 @@ function showCountryDetails(countryData) {
         .transition().duration(550)
         .attr('width', function(d) { return xScaleDetails(d); })
         .attr('height', 15);
+
+    bars.append('text').text(function(d, i) {
+            key = Object.keys(indicatorToLabel)[i];
+            return indicatorToLabel[key];
+        })
+        .attr('class', 'detailsBarLabel')
+        .style('text-anchor', 'end')
+        .attr('x', padding.l/1.1)
+        .attr('y', function(d, i) {
+            return 250 + 26.5 + (i*21);
+        });
 }
 
 function updateCountryDetails(countryData) {
@@ -460,13 +472,13 @@ function updateCountryDetails(countryData) {
 
     xScaleDetails.domain(d3.extent(countryData.factors));
     xAxisDetailsG.transition().duration(550).call(xAxisDetails);
-    countryDetailsGroup.selectAll('.bar').remove();
-    countryDetailsGroup.selectAll('.bar')
+    bars.selectAll('rect').remove();
+    bars.selectAll('rect')
         .data(countryData.factors)
         .enter()
         .append('rect')
-        .style('fill', function(d) { return colors.lightGray; })
-        .attr('class', 'bar')
+        .style('fill', function(d) { return '#a442f4'; })
+        // .attr('class', 'bar')
         .attr('x', padding.l)
         .attr('y', function(d, i) {
             return 250 + 15 + (i*21);
