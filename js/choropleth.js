@@ -11,9 +11,10 @@ info.onAdd = function(map) {
     this.update();
     return this._div;
 }
-
 info.update = updateInfo;
 info.addTo(myMap);
+
+var legend = L.control({position: 'bottomright'});
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -52,6 +53,8 @@ function draw(error, data, countries) {
             return d.score;
         }))
         .range([lowColor, highColor]);
+    legend.onAdd = addLegend;
+    legend.addTo(myMap);
 
     countriesDict = {};
     for (var i = 0; i < data.length; i++) {
@@ -137,4 +140,17 @@ function updateInfo(props) {
         this._div.innerHTML = '<h4>2017 World Happiness Report</h4>' +
             '<b>' + props.name + '</b><br/>' + 'Country not ranked';
     }
+}
+
+function addLegend(map) {
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 2, 4, 6, 8, 10],
+        labels = [];
+
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+           '<i style="background:' + colorScale(grades[i] + 1) + '"></i> ' +
+           grades[i] + (grades[i + 1] ? '<br>' : '');
+    }
+    return div;
 }
