@@ -151,7 +151,9 @@
 
     <br>
 
-    <div class="jumbotron jumbotron-fluid" align="center">
+<!-- START: Rankings List -->
+
+    <!-- <div class="jumbotron jumbotron-fluid" align="center">
         <div class="container">
             <p class="description">
                 <h3 align="center">The Ranks</h3>
@@ -160,22 +162,28 @@
                 </p>
             </p>
         </div>
-    </div>
+    </div> -->
+
+<!-- END: Rankings List -->
+
+<!-- START: Choropleth Map -->
 
     <div class="jumbotron jumbotron-fluid" align="center">
         <div class="container">
             <p class="description">
                 <h3 align="center">The State of Happiness in 2017</h3>
                 <p>
-                    Map: Work in progress
+                    The choropleth map below shows...
                 </p>
             </p>
         </div>
     </div>
 
     <div>
-        <div id="map" style="height: 500px; width: 90%; margin-right: auto; margin-left: auto;"></div>
+        <div id="map" style="height: 550px; width: 90%; margin-right: auto; margin-left: auto;"></div>
     </div>
+
+<!-- END: Choropleth Map -->
 
     <br><br>
 
@@ -207,8 +215,8 @@
         <a href="https://www.linkedin.com/in/alejandrinapatron" target="_blank" class="btn-social btn-outline"><i class="fa fa-lg fa-fw fa-linkedin"></i></a>
         <a href="https://www.github.com/apatronl" target="_blank" class="btn-social btn-outline"><i class="fa fa-lg fa-fw fa-github"></i></a>
         <p></p>
-        <a style="font-size:13px;" href="https://www.github.com/apatronl/WorldHappiness" target="_blank">Source Code</a>
-        <br><br>
+        <p><a style="font-size:13px;" href="https://www.github.com/apatronl/WorldHappiness" target="_blank">Source Code</a></p>
+        <p><a style="font-size:13px;" href="http://worldhappiness.report/" target="_blank">World Happiness Report</a></p>
     </div>
 <!-- </div> -->
 
@@ -222,7 +230,7 @@
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 <script src="./js/main.js"></script>
-<script src="./js/stateofhappiness.js"></script>
+<script src="./js/choropleth.js"></script>
 
 <!-- <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>

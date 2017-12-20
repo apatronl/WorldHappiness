@@ -208,7 +208,7 @@ d3.csv('./data/yearlyData.csv',
             year: +d.Year,
             region: d.Region,
             rank: +d['Happiness Rank'],
-            score: (+d['Happiness Score']).toFixed(3),
+            score: +(+d['Happiness Score']).toFixed(3),
             gdpPercap: +d['Economy (GDP per Capita)'],
             family: +d.Family,
             health: +d['Health (Life Expectancy)'],
@@ -331,7 +331,6 @@ function updateChart(year, indicator) {
         .on('mouseleave', tip.hide)
         .on('mouseover', function(d) {
             selectedCountry = d.country;
-            console.log(selectedCountry);
             updateCountryDetails(d);
             bubbleChartG.selectAll('circle')
                 .attr('opacity', function(e) {
@@ -475,10 +474,6 @@ function updateCountryDetails(countryData) {
 
     bars.merge(barEnter)
         .select('rect')
-        .on('mouseover', function(d) {
-            percent = (100 * d/countryData.score).toFixed(1);
-            console.log(percent);
-        })
         .attr('x', padding.l*2)
         .attr('y', function(d, i) {
             return 250 + 15 + (i*21);
@@ -503,8 +498,13 @@ function updateCountryDetails(countryData) {
 }
 
 function updateCountryDetailsOnYearChange() {
+    yearToIdx = {2015:0, 2016:1, 2017:2};
     countryDetailsGroup.select('#year').text('Year ' + selectedYear);
+
     // TODO: update country rank and indicator distribution
-    // console.log(dataByCountry);
-    //updateCountryDetails(data)
+    // if (dataByCountry[selectedCountry][yearToIdx[selectedYear]]) {
+    //     updateCountryDetails(dataByCountry[selectedCountry][yearToIdx[selectedYear]]);
+    // } else {
+    //     updateCountryDetails(dataByCountry[0].values[yearToIdx[selectedYear]]);
+    // }
 }
