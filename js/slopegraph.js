@@ -1,9 +1,9 @@
-var svg = d3.select('#ranks_slope_graph svg');
+var slopeGraphSVG = d3.select('#ranks_slope_graph svg');
 
-var svgWidth = +svg.attr('width');
-var svgHeight = +svg.attr('height');
+var svgWidth = +slopeGraphSVG.attr('width');
+var svgHeight = +slopeGraphSVG.attr('height');
 
-var padding = {t: 40, r: 50, b: 40, l: 50};
+// var padding = {t: 40, r: 50, b: 40, l: 50};
 
 var graphWidth = svgWidth - padding.l - padding.r;
 var graphHeight = svgHeight - padding.t - padding.b;
@@ -13,7 +13,7 @@ var x2 = graphWidth / 2;
 var x3 = graphWidth;
 
 var years = [2015, 2016, 2017];
-var stroke = 1.5;
+var stroke = 1.8;
 
 d3.csv('./data/yearlyData.csv',
     function(d) {
@@ -53,11 +53,13 @@ d3.csv('./data/yearlyData.csv',
     });
 
 function drawSlopeGraph() {
+    var padding = {t: 40, r: 50, b: 40, l: 50};
+
     var scale = d3.scaleLinear()
         .domain([1, 158])
         .range([0, graphHeight]);
 
-    var lines = svg.selectAll('line')
+    var lines = slopeGraphSVG.selectAll('line')
         .data(data);
 
     lines.enter()
