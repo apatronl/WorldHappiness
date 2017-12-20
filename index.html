@@ -33,9 +33,7 @@
                 The data used in this visualization come from the Gallup World Poll, which ranks countries based on answers to the main life evaluation question asked in the poll. This question is called the Cantril ladder, and asks respondents to think of a ladder, where the best possible life would be a 10, and the worst a 0. They then rate their own lives on that 0 to 10 scale.
                 You can learn more about the Gallup World Poll <a target="_blank" href="http://www.gallup.com/178667/gallup-world-poll-work.aspx">here</a>.
             </p>
-            <!-- <p>
-                You can learn more about the Gallup World Poll <a target="_blank" href="http://www.gallup.com/178667/gallup-world-poll-work.aspx">here</a>.
-            </p> -->
+
             <p>
                 In addition to using the Gallup weights to calculate a happiness score, the contributions of six factors – Family, GDP per Capita, Health, Freedom, Generosity, and Trust – when making life evaluations are calculated.
             </p>
@@ -116,6 +114,8 @@
         </div>
     </div>
 
+<!-- START: Bubble Chart -->
+
     <!-- <div class = "jumbotron"> -->
         <div align="center" id="bubble_chart">
         <!-- style="border: 1px solid #888;" -->
@@ -149,11 +149,13 @@
         <label for="yearSlider"  style="margin-left:6px;">2017</label>
     </div>
 
+<!-- END: Bubble Chart -->
+
     <br>
 
 <!-- START: Rankings List -->
 
-    <!-- <div class="jumbotron jumbotron-fluid" align="center">
+    <div class="jumbotron jumbotron-fluid" align="center">
         <div class="container">
             <p class="description">
                 <h3 align="center">The Ranks</h3>
@@ -162,7 +164,7 @@
                 </p>
             </p>
         </div>
-    </div> -->
+    </div>
 
 <!-- END: Rankings List -->
 
@@ -215,12 +217,15 @@
         <a href="https://www.linkedin.com/in/alejandrinapatron" target="_blank" class="btn-social btn-outline"><i class="fa fa-lg fa-fw fa-linkedin"></i></a>
         <a href="https://www.github.com/apatronl" target="_blank" class="btn-social btn-outline"><i class="fa fa-lg fa-fw fa-github"></i></a>
         <p></p>
-        <p><a style="font-size:13px;" href="https://www.github.com/apatronl/WorldHappiness" target="_blank">Source Code</a></p>
-        <p><a style="font-size:13px;" href="http://worldhappiness.report/" target="_blank">World Happiness Report</a></p>
+        <a style="font-size:13px;" href="https://www.github.com/apatronl/WorldHappiness" target="_blank">Source Code</a>
+        <br/>
+        <a style="font-size:13px;" href="http://worldhappiness.report/" target="_blank">World Happiness Report</a>
+        <br></br>
     </div>
 <!-- </div> -->
 
 </body>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -232,8 +237,4 @@
 <script src="./js/main.js"></script>
 <script src="./js/choropleth.js"></script>
 
-<!-- <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-<script src="./js/map.js"></script> -->
 </html>

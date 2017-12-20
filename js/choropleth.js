@@ -128,16 +128,16 @@ function onEachFeature(feature, layer) {
 
 function updateInfo(props) {
     if (!props) {
-        this._div.innerHTML = '<h4>2017 World Happiness Report</h4>' + 'Hover over a country';
+        this._div.innerHTML = '<h4>2017 World Happiness Scores</h4>' + 'Hover over a country';
         return;
     }
     var country = props.name;
     if (countriesDict[country]) {
-        this._div.innerHTML = '<h4>2017 World Happiness Report</h4>' +
+        this._div.innerHTML = '<h4>2017 World Happiness Scores</h4>' +
             '<b>' + props.name + '</b><br/>' + 'Happiness Score: ' + countriesDict[country].score
             + '<br/> Rank: ' + countriesDict[country].rank;
     } else {
-        this._div.innerHTML = '<h4>2017 World Happiness Report</h4>' +
+        this._div.innerHTML = '<h4>2017 World Happiness Scores</h4>' +
             '<b>' + props.name + '</b><br/>' + 'Country not ranked';
     }
 }
@@ -146,7 +146,6 @@ function addLegend(map) {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [0, 2, 4, 6, 8, 10],
         labels = [];
-
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
            '<i style="background:' + colorScale(grades[i] + 1) + '"></i> ' +
