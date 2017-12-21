@@ -36,7 +36,7 @@ var svgWidth = +svg.attr('width');
 var svgHeight = +svg.attr('height');
 
 var padding = {t: 60, r: 40, b: 60, l: 50};
-var colors = {white: '#fff', lightGray: '#888'};
+var colors = {white: '#fff', lightGray: '#888', purple: '#a442f4'};
 
 var chartWidth = (svgWidth * 2/3) - padding.l - padding.r;
 var chartHeight = svgHeight - padding.t - padding.b;
@@ -467,7 +467,7 @@ function updateCountryDetails(countryData) {
         .attr('class', 'bar');
 
     barEnter.append('rect')
-        .style('fill', function() { return '#a442f4'; })
+        .style('fill', function() { return colors.purple; })
         .attr('rx', 3);
 
     barEnter.append('text');

@@ -1,12 +1,12 @@
 var slopeGraphSVG = d3.select('#ranks_slope_graph svg');
 
-var svgWidth = +slopeGraphSVG.attr('width');
-var svgHeight = +slopeGraphSVG.attr('height');
+var slopeGraphSVGWidth = +slopeGraphSVG.attr('width');
+var slopeGraphSVGHeight = +slopeGraphSVG.attr('height');
 
 var margin = {t: 40, r: 100, b: 40, l: 100};
 
-var graphWidth = svgWidth - margin.l - margin.r;
-var graphHeight = svgHeight - margin.t - margin.b;
+var graphWidth = slopeGraphSVGWidth - margin.l - margin.r;
+var graphHeight = slopeGraphSVGHeight - margin.t - margin.b;
 
 var x1 = margin.l;
 var x2 = margin.l + graphWidth / 2;
