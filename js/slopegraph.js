@@ -108,6 +108,39 @@ function drawSlopeGraph() {
         .attr("stroke-width", stroke);
 
     lines.enter()
+        .append('circle')
+        .attr('r', stroke*2)
+        .attr('cx', x1)
+        .attr('cy', function(d) {
+            return scale(d['2015']);
+        })
+        .attr('fill', function(d) {
+            return regionColors[d.region];
+        });
+
+    lines.enter()
+        .append('circle')
+        .attr('r', stroke*2)
+        .attr('cx', x2)
+        .attr('cy', function(d) {
+            return scale(d['2016']);
+        })
+        .attr('fill', function(d) {
+            return regionColors[d.region];
+        });
+
+    lines.enter()
+        .append('circle')
+        .attr('r', stroke*2)
+        .attr('cx', x3)
+        .attr('cy', function(d) {
+            return scale(d['2017']);
+        })
+        .attr('fill', function(d) {
+            return regionColors[d.region];
+        });
+
+    lines.enter()
         .append('text')
         .text(function(d) {
             return d.country;
@@ -116,4 +149,14 @@ function drawSlopeGraph() {
         .attr('transform', function(d) {
             return 'translate(' + [x1/1.06, scale(d['2015'])] + ')';
         });
+
+        lines.enter()
+            .append('text')
+            .text(function(d, i) {
+                return i + 1;
+            })
+            .attr('text-anchor', 'start')
+            .attr('transform', function(d, i) {
+                return 'translate(' + [x3 + 10, scale(i+1) + 5] + ')';
+            });
 }
