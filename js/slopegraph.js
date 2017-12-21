@@ -42,7 +42,6 @@ d3.csv('./data/yearlyData.csv',
             .entries(dataset);
 
         data = [];
-        // for (var i = 0; i < dataByCountry.length; i++) {
         for (var i = 0; i < 10; i++) {
             countryData = dataByCountry[i];
             dict = { country: countryData.key };
@@ -53,7 +52,6 @@ d3.csv('./data/yearlyData.csv',
             dict.region = yearData.region;
             data.push(dict);
         }
-        console.log(data);
         drawSlopeGraph();
     });
 

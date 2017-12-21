@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-database.js"></script>
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="./css/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css">
@@ -247,9 +249,9 @@
 
                 <div class="row">
                         <div class="input-group" style="margin-right: auto; margin-left: auto;">
-                            <input type="text" class="form-control" placeholder="What makes YOU happy?" aria-label="What makes YOU happy?">
+                            <input id="happinessSubmission" type="text" class="form-control" placeholder="What makes YOU happy?" aria-label="What makes YOU happy?">
                             <span class="input-group-btn">
-                                <button class="btn btn-secondary" type="button">Submit</button>
+                                <button onclick="submitHappinessEntry()" class="btn btn-secondary" type="button">Submit</button>
                             </span>
                         </div>
                 </div>
@@ -274,6 +276,20 @@
 
 </body>
 
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCzIETOPPVcF0NajGlOjlZbE1v9WTEVWnk",
+    authDomain: "world-happiness.firebaseapp.com",
+    databaseURL: "https://world-happiness.firebaseio.com",
+    projectId: "world-happiness",
+    storageBucket: "world-happiness.appspot.com",
+    messagingSenderId: "464225795943"
+  };
+  firebase.initializeApp(config);
+</script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -285,5 +301,6 @@
 <script src="./js/main.js"></script>
 <script src="./js/choropleth.js"></script>
 <script src="./js/slopegraph.js"></script>
+<script src="./js/submission.js"></script>
 
 </html>
