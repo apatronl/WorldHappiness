@@ -172,10 +172,18 @@ function drawSlopeGraph() {
 
     lines.enter()
         .append('text')
+        .on('mouseenter', function(d) {
+            slopeMouseEnter(d.country);
+        })
+        .on('mouseleave', function(d) {
+            slopeMouseLeave();
+        })
         .text(function(d) {
             return d.country;
         })
+        .attr('id', 'countryName')
         .attr('text-anchor', 'end')
+        .attr('fill', '#888')
         .attr('transform', function(d) {
             return 'translate(' + [x1/1.06, scale(d['2015'])] + ')';
         });
@@ -186,6 +194,7 @@ function drawSlopeGraph() {
             return i + 1;
         })
         .attr('text-anchor', 'start')
+        .attr('fill', '#888')
         .attr('transform', function(d, i) {
             return 'translate(' + [x3 + 10, scale(i+1) + 5] + ')';
         });
@@ -201,6 +210,11 @@ function slopeMouseEnter(country) {
         .attr('opacity', function(d) {
             return d.country == country ? 1 : 0.3;
         });
+
+    slopeGraphSVG.selectAll('#countryName')
+        .attr('opacity', function(d) {
+            return d.country == country ? 1 : 0.3;
+        });
 }
 
 function slopeMouseLeave() {
@@ -208,5 +222,8 @@ function slopeMouseLeave() {
         .attr('opacity', 1);
 
     slopeGraphSVG.selectAll('circle')
+        .attr('opacity', 1);
+
+    slopeGraphSVG.selectAll('#countryName')
         .attr('opacity', 1);
 }
