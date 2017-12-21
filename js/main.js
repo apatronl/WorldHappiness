@@ -197,7 +197,7 @@ var barChartHeight = countryDetailsHeight / 1.8;
 var years = [2015, 2016, 2017];
 
 // Color mapping by region
-var regionColors = {'America': '#49f47f', 'Europe': '#f44949', 'Africa': '#49c9f4', 'Asia': '#f4f149'};
+var regionColors = {'America': '#49f47f', 'Europe': '#f44949', 'Africa': '#49c9f4', 'Asia': '#f4b642'};
 
 var radius = 6;
 

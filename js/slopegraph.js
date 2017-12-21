@@ -13,7 +13,10 @@ var x2 = margin.l + graphWidth / 2;
 var x3 = graphWidth + margin.l;
 
 var years = [2015, 2016, 2017];
-var stroke = 1.8;
+var stroke = 2.6;
+
+// Color mapping by region
+var regionColors = {'America': '#49f47f', 'Europe': '#f44949', 'Africa': '#49c9f4', 'Asia': '#f4b642'};
 
 d3.csv('./data/yearlyData.csv',
     function(d) {
@@ -47,6 +50,7 @@ d3.csv('./data/yearlyData.csv',
                 yearData = countryData.values[j];
                 dict[yearData.year] = yearData.rank;
             }
+            dict.region = yearData.region;
             data.push(dict);
         }
         console.log(data);
@@ -77,7 +81,9 @@ function drawSlopeGraph() {
             }
             return 0;
         })
-        .style("stroke", "black")
+        .style("stroke", function(d) {
+            return regionColors[d.region];
+        })
 		.attr("stroke-width", stroke);
 
     lines.enter()
@@ -96,7 +102,9 @@ function drawSlopeGraph() {
             }
             return 0;
         })
-        .style("stroke", "black")
+        .style("stroke", function(d) {
+            return regionColors[d.region];
+        })
         .attr("stroke-width", stroke);
 
     lines.enter()
