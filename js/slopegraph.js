@@ -13,6 +13,7 @@ var x2 = margin.l + graphWidth / 2;
 var x3 = graphWidth + margin.l;
 
 var years = [2015, 2016, 2017];
+var coords = [x1, x2, x3];
 var stroke = 2.6;
 
 // Color mapping by region
@@ -60,15 +61,29 @@ function drawSlopeGraph() {
         .domain([1, 10])
         .range([margin.t, graphHeight]);
 
+    slopeGraphSVG.selectAll('.year')
+        .data(years)
+        .enter()
+        .append('text')
+        .text(function(d) {
+            return d;
+        })
+        .attr('fill', '#888')
+        .attr('text-anchor', 'middle')
+        .attr('x', function(d, i) {
+            return coords[i];
+        })
+        .attr('y', margin.t / 2);
+
     var lines = slopeGraphSVG.selectAll('line')
         .data(data);
 
     lines.enter()
         .append('line')
-        .on('mouseenter', function(d) {
+        .on('mouseover', function(d) {
             slopeMouseEnter(d.country);
         })
-        .on('mouseleave', function(d) {
+        .on('mouseout', function(d) {
             slopeMouseLeave();
         })
         .attr('x1', x1)
@@ -92,10 +107,10 @@ function drawSlopeGraph() {
 
     lines.enter()
         .append('line')
-        .on('mouseenter', function(d) {
+        .on('mouseover', function(d) {
             slopeMouseEnter(d.country);
         })
-        .on('mouseleave', function(d) {
+        .on('mouseout', function(d) {
             slopeMouseLeave();
         })
         .attr('x1', x2)
@@ -119,13 +134,13 @@ function drawSlopeGraph() {
 
     lines.enter()
         .append('circle')
-        .on('mouseenter', function(d) {
+        .on('mouseover', function(d) {
             slopeMouseEnter(d.country);
         })
-        .on('mouseleave', function(d) {
+        .on('mouseout', function(d) {
             slopeMouseLeave();
         })
-        .attr('r', stroke*2)
+        .attr('r', stroke*4)
         .attr('cx', x1)
         .attr('cy', function(d) {
             return scale(d['2015']);
@@ -136,13 +151,13 @@ function drawSlopeGraph() {
 
     lines.enter()
         .append('circle')
-        .on('mouseenter', function(d) {
+        .on('mouseover', function(d) {
             slopeMouseEnter(d.country);
         })
-        .on('mouseleave', function(d) {
+        .on('mouseout', function(d) {
             slopeMouseLeave();
         })
-        .attr('r', stroke*2)
+        .attr('r', stroke*4)
         .attr('cx', x2)
         .attr('cy', function(d) {
             return scale(d['2016']);
@@ -153,13 +168,13 @@ function drawSlopeGraph() {
 
     lines.enter()
         .append('circle')
-        .on('mouseenter', function(d) {
+        .on('mouseover', function(d) {
             slopeMouseEnter(d.country);
         })
-        .on('mouseleave', function(d) {
+        .on('mouseout', function(d) {
             slopeMouseLeave();
         })
-        .attr('r', stroke*2)
+        .attr('r', stroke*4)
         .attr('cx', x3)
         .attr('cy', function(d) {
             return scale(d['2017']);
@@ -170,10 +185,10 @@ function drawSlopeGraph() {
 
     lines.enter()
         .append('text')
-        .on('mouseenter', function(d) {
+        .on('mouseover', function(d) {
             slopeMouseEnter(d.country);
         })
-        .on('mouseleave', function(d) {
+        .on('mouseout', function(d) {
             slopeMouseLeave();
         })
         .text(function(d) {
@@ -181,9 +196,10 @@ function drawSlopeGraph() {
         })
         .attr('id', 'countryName')
         .attr('text-anchor', 'end')
+        .style('font-size', 13)
         .attr('fill', '#888')
         .attr('transform', function(d) {
-            return 'translate(' + [x1/1.06, scale(d['2015'])] + ')';
+            return 'translate(' + [x1/1.2, scale(d['2015'])] + ')';
         });
 
     lines.enter()
@@ -191,10 +207,35 @@ function drawSlopeGraph() {
         .text(function(d, i) {
             return i + 1;
         })
-        .attr('text-anchor', 'start')
-        .attr('fill', '#888')
+        .attr('text-anchor', 'middle')
+        .style('font-size', 13)
+        .attr('fill', '#fff')
         .attr('transform', function(d, i) {
-            return 'translate(' + [x3 + 10, scale(i+1) + 5] + ')';
+            return 'translate(' + [x1, scale(i+1) + 5] + ')';
+        });
+
+    lines.enter()
+        .append('text')
+        .text(function(d, i) {
+            return i + 1;
+        })
+        .attr('text-anchor', 'middle')
+        .style('font-size', 13)
+        .attr('fill', '#fff')
+        .attr('transform', function(d, i) {
+            return 'translate(' + [x2, scale(i+1) + 5] + ')';
+        });
+
+    lines.enter()
+        .append('text')
+        .text(function(d, i) {
+            return i + 1;
+        })
+        .attr('text-anchor', 'middle')
+        .style('font-size', 13)
+        .attr('fill', '#fff')
+        .attr('transform', function(d, i) {
+            return 'translate(' + [x3, scale(i+1) + 5] + ')';
         });
 }
 

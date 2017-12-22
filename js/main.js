@@ -343,9 +343,7 @@ function updateChart(year, indicator) {
         .transition()
         .duration(650)
         .attr('opacity', visible)
-        .attr('r', function(d) {
-            return radius;
-        })
+        .attr('r', radius)
         .attr('cx', function(d) {
             return xScale(100*d[indicator]/d.score)
         })
