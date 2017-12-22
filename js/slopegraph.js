@@ -199,7 +199,7 @@ function drawSlopeGraph() {
         .style('font-size', 13)
         .attr('fill', '#888')
         .attr('transform', function(d) {
-            return 'translate(' + [x1/1.2, scale(d['2015'])] + ')';
+            return 'translate(' + [x1/1.2, scale(d['2015']) + 4] + ')';
         });
 
     lines.enter()
