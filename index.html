@@ -34,7 +34,7 @@
         <div class="container">
             <h3>How Are Happiness Scores Calculated?</h3>
             <p class="description">
-                The data used in this visualization come from the Gallup World Poll, which ranks countries based on answers to the main life evaluation question asked in the poll. This question is called the Cantril ladder, and asks respondents to think of a ladder, where the best possible life would be a 10, and the worst a 0. They then rate their own lives on that 0 to 10 scale.
+                The data used in this visualization come from the Gallup World Poll (GWP), which ranks countries based on answers to the main life evaluation question asked in the poll. This question is called the Cantril ladder, and asks respondents to think of a ladder, where the best possible life would be a 10, and the worst a 0. They then rate their own lives on that 0 to 10 scale.
                 You can learn more about the Gallup World Poll <a target="_blank" href="http://www.gallup.com/178667/gallup-world-poll-work.aspx">here</a>.
             </p>
 
@@ -47,9 +47,11 @@
                 <div class="col">
                     <div class="jumbotron" align="center">
                     <p style="font-weight: bold;">
-                        Family 👨‍👩‍👧
+                        Family (Social Support) 👨‍👩‍👧
                     </p>
                     The estimated extent to which Family contributes to the calculation of the Happiness Score.
+                    <br/><br/>
+                    Equal to the national average of the responses to the GWP question “If you were in trouble, do you have relatives or friends you can count on to help you whenever you need them, or not?”
                 </div>
                 </div>
                 <div class="col">
@@ -58,6 +60,9 @@
                         GDP per Capita 💰
                     </p>
                     The estimated extent to which GDP per Capita contributes to the calculation of the Happiness Score.
+                    <br/><br/>
+                    GDP per capita is in terms of Purchasing Power Parity (PPP) adjusted to constant 2011 international dollars.
+                    <br/><br/><br/>
                 </div>
                 </div>
                 <div class="col">
@@ -66,6 +71,9 @@
                         Health 🏥
                     </p>
                     The estimated extent to which Health (Life Expectancy) contributes to the calculation of the Happiness Score.
+                    <br/><br/>
+                    The time series of healthy life expectancy at birth are constructed based on data from the World Health Organization and World Development Indicators.
+                    <br/><br/>
                 </div>
                 </div>
 
@@ -77,6 +85,9 @@
                             Freedom 🔓
                         </p>
                         The estimated extent to which Freedom contributes to the calculation of the Happiness Score.
+                        <br></br>
+                        Equal to the national average of binary responses to the GWP question “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”
+                        <br/><br/><br/>
                     </div>
                 </div>
                 <div class="col">
@@ -85,6 +96,9 @@
                             Generosity 💜
                         </p>
                         The estimated extent to which Generosity contributes to the calculation of the Happiness Score.
+                        <br></br>
+                        Equal to the residual of regressing the national average of GWP responses to the question “Have you donated money to a charity in the past month?” on GDP per capita.
+                        <br/><br/><br/>
                     </div>
                 </div>
                 <div class="col">
@@ -93,6 +107,8 @@
                             Trust ✋🏼
                         </p>
                         The estimated extent to which Trust contributes to the calculation of the Happiness Score.
+                        <br></br>
+                        Perceptions of corruption (Trust) are the average of binary answers to two GWP questions: “Is corruption widespread throughout the government or not?” and “Is corruption widespread within businesses or not?”
                     </div>
                 </div>
             </div>
@@ -102,7 +118,7 @@
                         <p style="font-weight: bold;">
                             Dystopia Residual 🌋
                         </p>
-                        The extent to which Dystopia Residual contributes to the calculation of the Happiness Score.
+                        Each country is compared against a hypothetical nation called Dystopia. Dystopia represents the lowest national averages for each of the six key variables and is, along with residual error, used as a regression benchmark.
                     </div>
                 </div>
             </div>
