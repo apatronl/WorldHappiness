@@ -1,3 +1,9 @@
+/**
+ * Draws a slopegraph showing how the ranks of the top 10 happiest countries have changed in the past three years (2015, 2016, 2017).
+ *
+ * @author Alejandrina Patrón
+ */
+
 var slopeGraphSVG = d3.select('#ranks_slope_graph svg');
 
 var slopeGraphSVGWidth = +slopeGraphSVG.attr('width');

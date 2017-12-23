@@ -1,3 +1,10 @@
+/**
+ * Draws an interactive bubble chart showing how each of six factors contributes
+ * to a country's happiness score.
+ *
+ * @author Alejandrina Patrón
+ */
+
 var selectedYear = 2015;
 var selectedIndicator = 'family';
 var selectedCountry = '';

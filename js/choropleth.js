@@ -1,3 +1,10 @@
+/**
+ * Draws an interactive choropleth map to show happiness scores by country in
+ * 2017.
+ *
+ * @author Alejandrina Patrón
+ */
+
 var map = d3.select('#map');
 var mapWidth = +map.attr('width');
 var mapHeight = +map.attr('height');
