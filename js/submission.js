@@ -5,11 +5,11 @@ function submitHappinessEntry() {
     var newSubmissionKey = firebase.database().ref().child('submissions').push().key;
     var updates = {};
     updates['/submissions/' + newSubmissionKey] = submission;
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
+    alert('Thanks for your submission! I hope you have a happy day 😊');
+    $("#happinessSubmission").val('');
 }
 
 function isEmpty(str) {
     return !str || str.length === 0 || !str.trim();
 }
-
-// Thanks for your submission. Once I've received enough submissions I'll share another visualization
