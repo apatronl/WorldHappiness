@@ -51,6 +51,15 @@ p.description {
     background-image: linear-gradient(to bottom,#979797 0,#707070 100%);
 }
 
+.tooltip {
+    opacity: 1;
+}
+
+.tooltip .tooltip-inner {
+    background-color: #999;
+    margin-left: -25px;
+}
+
 /* Filters */
 
 .filter {

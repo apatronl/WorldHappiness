@@ -24,7 +24,7 @@ var visible = 0.8;
 var invisible = 0.3;
 
 // Creates a bootstrap-slider element
-$("#yearSlider").slider({
+$("#yearSlider").bootstrapSlider({
     tooltip: 'always',
     tooltip_position:'bottom'
 });
@@ -348,7 +348,7 @@ function updateChart(year, indicator) {
             bubbleChartG.selectAll('circle').attr('opacity', visible);
         })
         .transition()
-        .duration(650)
+        .duration(750)
         .attr('opacity', visible)
         .attr('r', radius)
         .attr('cx', function(d) {
