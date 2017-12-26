@@ -241,7 +241,7 @@ d3.csv('./data/yearlyData.csv',
             console.error(error);
             return;
         }
-console.log(dataset);
+
         dataByCountry = d3.nest()
             .key(function(d) {
                 return d.country;
@@ -506,10 +506,18 @@ function updateCountryDetailsOnYearChange() {
     yearToIdx = {2015:0, 2016:1, 2017:2};
     countryDetailsGroup.select('#year').text('Year ' + selectedYear);
 
-    // TODO: update country rank and indicator distribution
-    // if (dataByCountry[selectedCountry][yearToIdx[selectedYear]]) {
-    //     updateCountryDetails(dataByCountry[selectedCountry][yearToIdx[selectedYear]]);
-    // } else {
-    //     updateCountryDetails(dataByCountry[0].values[yearToIdx[selectedYear]]);
-    // }
+    var country = dataByCountry.find(function(d) {
+        return d.key == selectedCountry;
+    });
+    if (country) {
+        var selectedYearData = country.values.find(function(d) {
+            return d.year == selectedYear;
+        });
+        if (selectedYearData) {
+            updateCountryDetails(selectedYearData);
+            return;
+        }
+    }
+    selectedCountry = dataByCountry[0].values[yearToIdx[selectedYear]].country;
+    updateCountryDetails(dataByCountry[0].values[yearToIdx[selectedYear]]);
 }
