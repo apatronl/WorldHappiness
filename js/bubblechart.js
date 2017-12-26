@@ -241,7 +241,7 @@ d3.csv('./data/yearlyData.csv',
             console.error(error);
             return;
         }
-
+console.log(dataset);
         dataByCountry = d3.nest()
             .key(function(d) {
                 return d.country;

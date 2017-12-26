@@ -35,22 +35,22 @@ d3.csv('./data/yearlyData.csv',
             score: +(+d['Happiness Score']).toFixed(3)
         }
     },
-    function(error, dataset) {
+    function(error, slopeGraphDataset) {
         if (error) {
             console.error('Error while loading datasets.');
             console.error(error);
             return;
         }
 
-        dataByCountry = d3.nest()
+        slopeGraphDataByCountry = d3.nest()
             .key(function(d) {
                 return d.country;
             })
-            .entries(dataset);
+            .entries(slopeGraphDataset);
 
         data = [];
         for (var i = 0; i < 10; i++) {
-            countryData = dataByCountry[i];
+            countryData = slopeGraphDataByCountry[i];
             dict = { country: countryData.key };
             for (var j = 0; j < countryData.values.length; j++) {
                 yearData = countryData.values[j];
