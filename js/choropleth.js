@@ -11,6 +11,7 @@ var mapHeight = +map.attr('height');
 
 var atlLatLng = new L.LatLng(31.7917, -3.0926);
 var myMap = L.map('map').setView(atlLatLng, 1);
+myMap.scrollWheelZoom.disable();
 
 var info = L.control();
 info.onAdd = function(map) {
