@@ -29,9 +29,13 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     maxZoom: 5,
     minZoom: 1.5,
     id: 'mapbox.light',
-    accessToken: 'pk.eyJ1IjoiamFnb2R3aW4iLCJhIjoiY2lnOGQxaDhiMDZzMXZkbHYzZmN4ZzdsYiJ9.Uwh_L37P-qUoeC-MBSDteA'
+    accessToken: 'pk.eyJ1IjoiYWxlcCIsImEiOiJjamJ6bzFhYTIwMG9sMzJuc3FuMm1sN2p6In0.uS6LOJXC809_GCLLp32p8A'
 }).addTo(myMap);
 
+// Access Token
+// pk.eyJ1IjoiYWxlcCIsImEiOiJjamJ6bzFhYTIwMG9sMzJuc3FuMm1sN2p6In0.uS6LOJXC809_GCLLp32p8A
+
+// pk.eyJ1IjoiamFnb2R3aW4iLCJhIjoiY2lnOGQxaDhiMDZzMXZkbHYzZmN4ZzdsYiJ9.Uwh_L37P-qUoeC-MBSDteA
 
 var svgLayer = L.svg();
 svgLayer.addTo(myMap);
